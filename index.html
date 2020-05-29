@@ -127,13 +127,19 @@
             // var id = document.getElementById('peer-id').value;
             console.log(id)
             Email.send({
-                Host : "smtp.elasticemail.com",
-                Username : "nalberthyuf@gmail.com",
-                Password : "4A5E4DE461ABC53C184AC878B235FA1D6DCF",
+                SecureToken : "80ddcdab-1aa8-421b-9659-c43e0aee8792",
                 To : email,
-                From : "nalberthy@rede.ulbra.br",
+                From : "sistemas.distribuidos.2020@gmail.com",
                 Subject : "ID para conexão",
-                Body : "Utilize o id: '"+id+"' para conectar-se!"
+                Body : "<div align='center'><h4> Sistemas Distribuidos</h4><p>Olá, seu parceiro esta tentando conectar-se. Para iniciar conexão copie o ID abaixo e <a href='https://sistemasdistribuidos-v2-peertopeer.github.io/'>Clique aqui</a> para ser redirecionado.<br><br> ID: <b>"+id+"</b></p></div>"
+
+                // Host : "smtp.elasticemail.com",
+                // Username : "nalberthyuf@gmail.com",
+                // Password : "4A5E4DE461ABC53C184AC878B235FA1D6DCF",
+                // To : email,
+                // From : "sistemasdistridos@gmail.com",
+                // Subject : "ID para conexão",
+                // Body : "Utilize o id: '"+id+"' para conectar-se!"
             }).then(
             message => alert(message)
             );
