@@ -295,6 +295,7 @@ body {
 }
 .panel-body {
   padding: 2px;
+  background-color: white;
 }
 .panel-heading {
   padding: 7px 15px;

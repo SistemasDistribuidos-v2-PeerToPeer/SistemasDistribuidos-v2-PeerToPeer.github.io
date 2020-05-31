@@ -1,6 +1,7 @@
 // UI Manager for the Chat app
 function myjsapp(peerClient) {
     var chatHistory = {};
+    var chatMobile = {};
     var chatPanel = {};
 
     var cookie = {
@@ -38,6 +39,10 @@ function myjsapp(peerClient) {
 
         function connectToPeer() {
             var id = $('#inputPeerUserId').val().trim();
+            if(id==''){
+                var id = $('#inputPeerUserIdMmobile').val().trim();
+            }
+
             if(id) {
                 peerClient.connectToId(id.toLowerCase())
                 $('#inputPeerUserId').val('')
@@ -47,11 +52,23 @@ function myjsapp(peerClient) {
             connectToPeer()
         });
 
+        $('#connect-btn-mobile').click(function (event) {
+            connectToPeer()
+        });
+
         $('#inputPeerUserId').keypress(function(event) {
             if (13 == event.which) {
                 connectToPeer()
             }
         });
+
+        $('#inputPeerUserIdMmobile').keypress(function(event) {
+            if (13 == event.which) {
+                connectToPeer()
+            }
+        });
+
+        
 
         $(document).on('click', '.peeruser', function() {
             var id = $(this).text()
@@ -74,10 +91,10 @@ function myjsapp(peerClient) {
             try {
                 var successful = document.execCommand('copy');
                 var msg = successful ? 'successful' : 'unsuccessful';
-                console.log('Copying text command was ' + msg);
+                // console.log('Copying text command was ' + msg);
                 textArea.remove();
             } catch (err) {
-                console.log('Oops, unable to copy');
+                // console.log('Oops, unable to copy');
             }
         });
 
@@ -134,12 +151,33 @@ function myjsapp(peerClient) {
     }
 
     function appendToHistory(id, message, isSent) {
+
         if(chatHistory[id]) {
             var hist = chatHistory[id];
-            var fromTxt = isSent ? 'You ' : id
-            var msg = $('<li><b>' + fromTxt + ': </b></li>').append('<span> ' + message + ' </span')
+            var histMobile = chatMobile[id];
+            
+
+
+            if(isSent){
+                var msg=$('<div class="container mt-3"><div class="row flex-row-reverse"><div class="enviado"><div> '+ message+'</div><div class="d-flex flex-row-reverse"><div class="triangulo-enviado"></div></div></div></div></div>');   
+                var msgmobile=$('<div class="container mt-3"><div class="row flex-row-reverse"><div class="enviado"><div> '+ message+'</div><div class="d-flex flex-row-reverse"><div class="triangulo-enviado"></div></div></div></div></div>');
+            }
+            else{
+                var msg=$('<div class="container mt-3"><div class="row"><div class="recebido"><div> '+ message+'</div><div class="triangulo-para-baixo"></div></div></div></div>');
+                var msgmobile=$('<div class="container mt-3"><div class="row"><div class="recebido"><div> '+ message+'</div><div class="triangulo-para-baixo"></div></div></div></div>');
+                
+                // if($('#'+id).hasClass("d-none")==true){
+                //     $('.chamadaModal').text(id+' ')
+                //     $("#getchamada").modal({
+                //         show: true
+                //       });
+                // }
+
+            }
+            histMobile.append(msgmobile)
+            .scrollTop(histMobile[0].scrollHeight); 
             hist.append(msg)
-                .scrollTop(hist[0].scrollHeight);            
+                .scrollTop(hist[0].scrollHeight);   
         }
     }
 
@@ -163,39 +201,102 @@ function myjsapp(peerClient) {
     return {
         setPeerId : function (id) {
             $('#peer-id').text(id);
+            $('#peer-id-mobile').text(id);
         },
 
         createChatWindow: function(id) {
+            
+            var idUser = id;
+            //Cria lista de usuarios conectados no menu mobile
+            var listChamadas = $('.conversas')
+            var usr = '<li class="nav-item" id="'+idUser+'-conversas"><a class="nav-link conversas-chat ml-5"  onclick="navegarChat('+idUser+')" >'+idUser+'</a></li>'
+            listChamadas.append(usr);
+
+            
+            
+            var panelMobile = $(
+                '<div class="chat-box-mobile h-100 d-none" id="'+idUser+'">'+
+                    '<div class="panel-body-mobile">'+
+
+                    '</div> '+
+
+                    '<div class="panel-footer-mobile">'+
+                        '<div class="form-group d-flex m-2">'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'
+
+
+            )
+
+            var historyMobile =  $('<ul class="chatHistory-mobile"></ul>');
+            var messageMobile = $('<input type="text" class="form-control" placeholder="Mensagem">')
+            var sendBtnMobile = $('<button type="button" class="ml-2 btn btn-enviar">Enviar</button>')
+            chatMobile[idUser] = historyMobile
+
+            $('.panel-body-mobile', panelMobile).append(historyMobile)
+            $('.form-group', panelMobile).append(messageMobile).append(sendBtnMobile)
+            $('.chat-mobile').append(panelMobile);
+            
+            var altura = $('.chat-mobile').height();
+            historyMobile.height(altura-56);
+
+            messageMobile.keypress(function(event) {
+                if (13 == event.which) {
+                    var msgText = $(this).val().trim()
+                    if(msgText) {
+                        peerClient.sendMessage(idUser, msgText)
+                        appendToHistory(idUser, msgText, true)
+                        $(this).val('')
+                    }
+                }
+            });
+
+            sendBtnMobile.click(function(event) {
+                var msgText = messageMobile.val().trim()
+                if(msgText) {
+                    peerClient.sendMessage(idUser, msgText)
+                    appendToHistory(idUser, msgText, true)
+                    messageMobile.val('').focus()
+                }
+            });
+            
+            
+            
+            //-------------------------------------------------------------
             var toPeerId = id;
-            var panel = $('<div class="panel panel-primary chat-div"><div class="panel-heading"></div>' +
+            var panel = $(
+                '<div class="chat-box"><div class="panel-titulo"></div>' +
                 '<div class="panel-body"></div><div class="panel-footer">' +
                 '<div class="form-inline"><div class="form-group">' +
                 '</div></div></div></div>')
 
             var title = $('<span class="panel-title"></span>').text(toPeerId)
             var history = $('<ul class="chatHistory"></ul>')
-            var message = $('<input type="text" class="form-control" placeholder="Enter Message">')
-            var sendBtn = $('<button type="button" class="btn btn-outline-primary">Enviar</button>')
+            var message = $('<input type="text" class="form-control" placeholder="Mensagem">')
+            var sendBtn = $('<button type="button" class="ml-2 btn btn-enviar">Enviar</button>')
             var chatButton = $('<a class="portfolio-link">');
-            var finishChat = $('<i class="fa fa-times fa-2x close-icon" aria-hidden="true"></i></a>');
+            var finishChat = $(' <img src="img/close.png" class="float-right mr-2" alt="fechar" style="width: 18px;"></a>');
             chatButton.append(finishChat)
             chatHistory[toPeerId] = history
             chatPanel[toPeerId] = panel
 
-            $('.panel-heading', panel).append(title).append(chatButton)
-            $('.panel-body', panel).append('<span class="text-primary">Diga "oi" ao usuario conectado</span>').append(history)
+            $('.panel-titulo', panel).append(title).append(chatButton)
+            $('.panel-body', panel).append(' <div class="text-center"><span class="descricao-chat ">Diga um "oi" para seu parceiro</span></div> ').append(history)
             $('.form-group', panel).append(message).append(sendBtn)
 
             $('.chat-container > div').append(panel);
 
-            $('.panel-heading', panel).click(function () {
+            
+            $('.panel-titulo', panel).click(function () {
+                var box = $(".chat-box");
                 var panelBody = $(".panel-body, .panel-footer", $(this).parent());
-                if(panelBody.hasClass("hide")) {
-                    panelBody.removeClass("hide")
-                    panel.removeClass('min')
+                if(panelBody.hasClass("d-none")) {
+                    panelBody.removeClass("d-none")
+                    box.removeClass("d-table")
                 } else {
-                    panel.addClass('min')
-                    panelBody.addClass("hide")
+                    panelBody.addClass("d-none")
+                    box.addClass("d-table")
                 }                
             })
 
@@ -219,7 +320,7 @@ function myjsapp(peerClient) {
                 }
             });
             finishChat.click(function (event) {
-                console.log(toPeerId);
+                // console.log(toPeerId);
                 peerClient.close(toPeerId);
                 // closeChatWindow(toPeerId);
                 // initializeLocalVideo()
@@ -236,6 +337,7 @@ function myjsapp(peerClient) {
                 chatPanel[id].remove()
                 delete chatPanel[id]
                 delete chatHistory[id]
+                delete chatHistory[id+'mob']
             }
         },
        
@@ -263,3 +365,18 @@ var myapp, peerapp;
 $(document).ready(function () {
     myapp = myjsapp(peerapp);
 });
+
+
+function navegarChat(html){
+    console.log($('#'+html.id+'-conversas'))
+    $('.selecionado').removeClass("selecionado")
+    $('#'+html.id+'-conversas').addClass("selecionado")
+
+    $('.chat-box-mobile').addClass("d-none");
+    $('.usuario-mobile').text('  '+html.id)
+    $('#'+html.id).removeClass("d-none")
+    
+   
+
+    
+}

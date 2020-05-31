@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Sistemas Distribuidos</title>
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Custom Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -18,97 +18,199 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
     <!-- Theme CSS -->
     <link href="css/agency.css" rel="stylesheet">
+    <link href="css/estilo.css" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top bg-inverse">
-        <a class="navbar-brand" href="">Sistemas Distribuidos</a>
-    </nav>
-
-    <section id="chat-app">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-lg-6 col-md-6 mb-4">
-                    <label><h5>COMPARTILHE SUA ID PARA REALIZAR CONEXÃO!</h5> </label><br>
-    				ID: <h4 id="peer-id" data-toggle="tooltip" data-placement="top" title="Click para copiar o ID"></h3>
-                    <a href="#getUserNameModal" data-toggle="modal">Alterar</a>
-    			</div>
-    			<div class="col-lg-6 col-md-6 mb-5">
-    				<div class="form-inline">
-						<div class="form-group mr-sm-3">
-							<input type="text" class="form-control" id="inputPeerUserId" placeholder="Conectar com ID parceiro">
-                        </div>
-						<button type="button" class="btn btn-outline-primary" id='connect-btn'>Conectar</button>
-					</div>
-    			</div>
-                <!-- <div class="col-lg-6 col-md-3 ml-md-auto">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Usuarios Online</h3>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="onlinepeers"></ul>
-                        </div>
+    <div class="d-none d-md-block">
+        <div class="container  mt-5 ">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <img src="img/logo.png" class="img-fluid" alt="Logo">
+                    <div>
+                        <h6 class="descricao-id">Seu ID: <span id="peer-id" class=""></span></h6>
                     </div>
-                </div> -->
-
-                <div class="col-lg-6 col-md-6 mb-5">
-    				<div class="form-inline">
-						<div class="form-group mr-sm-3">
-							<input type="text" class="form-control" id="email" placeholder="Enviar ID para mail parceiro">
-                        </div>
-						<button type="button" class="btn btn-outline-primary" onclick="enviarEmail()">Enviar</button>
-					</div>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-
-    <div class="container-fluid chat-container">
-		<div class="row">
-		</div>
-    </div>
-
-    <!-- Portfolio Modals -->
-    <!-- Use the modals below to showcase details about your portfolio projects! -->
-    <!-- Portfolio Modal 1 -->
-
-
-    <div class="modal" id="getUserNameModal" tabindex="-1" role="dialog" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop='static'>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Entre Com Seu Nome</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="user-name">
+                    <div>
+                        <a href="#getUserNameModal" data-toggle="modal" class="link alterar mr-2">Alterar ID</a>
+                        <a href="#getEmailModal" data-toggle="modal" class="link compartilhar ml-2">Compartilhar</a>
                     </div>
+                    
                 </div>
-                
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-primary username-done">Entrar</button>
+            </div>
+        </div>
+        <div class="container-fluid  mt-5">
+            <div class="row">
+                <div class="col-md-5 col-8 col-xl-3 m-auto text-center">
+                    <input type="text" class="form-control" id="inputPeerUserId" placeholder="Conectar com ID parceiro">
+                </div>
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-padrao mt-2" id='connect-btn'>Conectar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <!-- <div class="modal" id="chatConfirmationModal" tabindex="-1" role="dialog" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop='static'>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title peer-name"></h5>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger reject-chat" data-dismiss="modal">Reject</button>
-                    <button type="button" class="btn btn-primary accept-chat" data-dismiss="modal">Accept</button>
-                </div>
+    <div class="d-block d-md-none" id="navMobile">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light posicao-nav">
+            <a class="navbar-brand" href="#"><img src="img/logo.png" class="img-fluid" alt="Logo" style="width: 50px;"><span class="usuario-mobile" id="titulo-mobile"> Web Chat</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <a class="nav-link conversas" href="#">Conversas <span class="sr-only"></span></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#getNovaConversa" data-toggle="modal" >Nova conversa <span class="sr-only"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Seu ID: <span id="peer-id-mobile" class=""></span></a>
+                        <li class="nav-item">
+                            <a class="nav-link ml-5"  href="#getUserNameModal" data-toggle="modal" >Alterar ID <span class="sr-only">(Página atual)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ml-5" href="#getEmailModal" data-toggle="modal" >Compartilhar <span class="sr-only">(Página atual)</span></a>
+                        </li>
+                    </li>
+                </ul>
             </div>
+          </nav>
+    </div>
+
+
+
+
+    <div class="container-fluid chat-container d-none d-md-block">
+		<div class="row align-items-end" > 
         </div>
-    </div> -->
+    </div>
+
+
+    <div class="container-fluid d-md-none d-block  h-100 chat-mobile p-0">
+            <!-- <div class="chat-box-mobile h-100">
+                <div class="panel-body-mobile"> 
+                    <ul class="chatHistory-mobile h-100">
+                        <div class="container mt-3"><div class="row flex-row-reverse"><div class="enviado"><div> '+ message+'</div><div class="d-flex flex-row-reverse"><div class="triangulo-enviado"></div></div></div></div></div>
+                        <div class="container mt-3"><div class="row"><div class="recebido"><div> '+ message+'</div><div class="triangulo-para-baixo"></div></div></div></div>  
+                    </ul>
+                </div>
+                    
+                <div class="panel-footer">
+                    <div class="form-group d-flex">
+                        <input type="text" class="form-control" placeholder="Mensagem">
+                        <button type="button" class="ml-2 btn btn-enviar">Enviar</button>
+                    </div>
+                </div>
+            </div> -->
+       
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal ID -->
+<div class="modal fade" id="getUserNameModal" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header p-2">
+            <span class="titulo-modal" id="TituloModalCentralizado">Informe seu id de conexão</span>
+          </div>
+        <div class="modal-body">
+            <form>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control form-control-sm" id="user-name" placeholder="Insira seu ID ">
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" data-dismiss="modal" class="btn btn-sm btn-padrao username-done">Iniciar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal eMAIL -->
+<div class="modal fade" id="getEmailModal" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header p-2">
+              <span class="titulo-modal" id="TituloModalCentralizado">Informe o email do seu parceiro</span>
+            </div>
+          <div class="modal-body">
+              <form>
+                  <div class="row">
+                      <div class="col">
+                          <input type="text" class="form-control form-control-sm" id="email" placeholder="Insira e-mail do seu parceiro ">
+                      </div>
+                      <div class="col-auto">
+                          <button type="button" data-dismiss="modal" class="btn btn-sm btn-padrao" onclick="enviarEmail()">Enviar</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal nova chamada -->
+<div class="modal fade" id="getchamada" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header p-2">
+            <h5 class="modal-title">Olá</h5>
+          </div>
+          <div class="modal-body p-2">
+            <p> <span class="chamadaModal" id="chamadaModal"></span>Enviou uma mensagem</p>
+          </div>
+          <div class="modal-footer p-2">
+            <button type="button" class="btn btn-fechar btn-sm" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-padrao btn-sm">Abrir</button>
+          </div>
+
+      </div>
+    </div>
+  </div>
+  
+
+
+<!-- Modal Nova Conversa -->
+<div class="modal fade" id="getNovaConversa" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header p-2">
+              <span class="titulo-modal" id="TituloModalCentralizado">Informe o email do seu parceiro</span>
+            </div>
+          <div class="modal-body">
+              <form>
+                  <div class="row">
+                      <div class="col">
+                        <input type="text" class="form-control" id="inputPeerUserIdMmobile" placeholder="Conectar com ID parceiro">
+                      </div>
+                      <div class="col-auto">
+                          <button type="button" data-dismiss="modal" class="btn btn-sm btn-padrao" id='connect-btn-mobile' >Conectar</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+
 
     <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script src="js/jquery.min.js"></script>

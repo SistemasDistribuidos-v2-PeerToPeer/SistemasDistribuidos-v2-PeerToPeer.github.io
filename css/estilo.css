@@ -1,0 +1,178 @@
+body, html{
+    height: 100%;
+    
+  }
+  body{
+    padding-top: 63px;
+  }
+
+
+
+/* @media screen and (max-width: 720px) {
+body{
+    padding-bottom: 69px;
+
+}
+} */
+  .posicao-nav{
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      z-index: 100;
+  }
+
+.descricao-id{
+    color: rgb(226, 189, 192);
+
+}
+
+
+.link{
+    color: #2C3C43!important ;
+    text-decoration: underline #2C3C43!important
+}
+
+.link:hover{
+    cursor: pointer;
+    color: rgb(16, 105, 143)!important ;
+    text-decoration: underline rgb(16, 105, 143)!important
+}
+
+.btn-padrao{
+    background-color: #2C3C43;
+    color: white;
+}
+
+.btn-padrao:hover{
+    background-color: rgb(77, 108, 121);
+}
+
+.btn-fechar{
+    background-color: #F1626C;
+    color: white;
+}
+.btn-fechar:hover{
+    background-color: rgb(228, 150, 155);
+}
+
+.titulo-modal{
+    color: #F1626C;
+}
+
+.panel-titulo{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #2C3C43;
+    color: white;
+    font-weight: bold;
+}
+
+.descricao-chat{
+    color: #BABABA;
+}
+
+.btn-enviar{
+    background-color: transparent;
+    border: 1px solid #F1626C;
+    color: #F1626C;
+}
+
+.chat-box{
+    max-width: 315px;
+    border: 1px solid #2C3C43;
+    margin-bottom: 15px; 
+    margin-left: 15px;  
+}
+
+.recebido{
+    background-color: #FEEBEC;
+    padding: 7px 7px 0px 7px;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-left: 5px;
+}
+
+.triangulo-para-baixo {
+    position: relative;
+    bottom:-15px ;
+    width: 0; 
+    height: 0; 
+    border-left: 0px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid  #FEEBEC;
+    
+  }
+
+  .chat-historico{
+     min-height: 200px;
+     list-style: none;
+     padding: 0;
+  }
+
+  .chat-historico >div{
+      padding-top: 20px;
+  }
+
+  .enviado{
+    background-color: #F0F1F1;
+    padding: 7px 7px 0px 7px;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-left: 20px;
+  }
+
+  .triangulo-enviado {
+    position: relative;
+    bottom:-15px ;
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 15px solid  #F0F1F1;
+    
+  }
+
+  .chat-box-mobile{
+  
+    flex-direction: column;
+    display: flex;
+
+  }
+
+
+  .chat-mobile{
+ display: flex;
+  }
+
+  .chatHistory-mobile{
+    background-color: white;
+    flex-grow: 1;
+    list-style: none;
+    background: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom:0px !important;
+    margin-top:0px !important;
+    height: 250px;
+    overflow-y: auto;
+  }
+
+
+
+
+  .usuario-mobile{
+      font-weight: bold;
+      color: #F1626C;
+  }
+
+
+  .panel-footer-mobile{
+      background-color: #f5f5f5;
+      height: 54px;
+    
+    }
+
+    .selecionado{
+        background-color: rgba(241, 98, 108, 0.274);
+    }
